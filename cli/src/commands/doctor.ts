@@ -51,9 +51,9 @@ export async function doctor(opts: {
     const readResult: CheckResult = {
       name: "Config file",
       status: "fail",
-      message: `Could not read config: ${err instanceof Error ? err.message : String(err)}`,
+      message: `无法读取配置：${err instanceof Error ? err.message : String(err)}`,
       canRepair: false,
-      repairHint: "Run `paperclipai configure --section database` or `paperclipai onboard`",
+      repairHint: "请运行 `paperclipai configure --section database` 或 `paperclipai onboard`",
     };
     results.push(readResult);
     printResult(readResult);
@@ -142,7 +142,7 @@ async function maybeRepair(
   let shouldRepair = opts.yes;
   if (!shouldRepair) {
     const answer = await p.confirm({
-      message: `Repair "${result.name}"?`,
+      message: `修复“${result.name}”吗？`,
       initialValue: true,
     });
     if (p.isCancel(answer)) return false;
@@ -152,10 +152,10 @@ async function maybeRepair(
   if (shouldRepair) {
     try {
       await result.repair();
-      p.log.success(`Repaired: ${result.name}`);
+      p.log.success(`已修复：${result.name}`);
       return true;
     } catch (err) {
-      p.log.error(`Repair failed: ${err instanceof Error ? err.message : String(err)}`);
+      p.log.error(`修复失败：${err instanceof Error ? err.message : String(err)}`);
     }
   }
   return false;
@@ -189,14 +189,14 @@ function printSummary(results: CheckResult[]): { passed: number; warned: number;
   if (warned) parts.push(pc.yellow(`${warned} warnings`));
   if (failed) parts.push(pc.red(`${failed} failed`));
 
-  p.note(parts.join(", "), "Summary");
+  p.note(parts.join(", "), "摘要");
 
   if (failed > 0) {
-    p.outro(pc.red("Some checks failed. Fix the issues above and re-run doctor."));
+    p.outro(pc.red("有检查失败。请先修复上面的问题，再重新运行 doctor。"));
   } else if (warned > 0) {
-    p.outro(pc.yellow("All critical checks passed with some warnings."));
+    p.outro(pc.yellow("所有关键检查都已通过，但仍有一些警告。"));
   } else {
-    p.outro(pc.green("All checks passed!"));
+    p.outro(pc.green("全部检查通过！"));
   }
 
   return { passed, warned, failed };

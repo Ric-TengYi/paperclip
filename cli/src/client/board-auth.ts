@@ -162,7 +162,7 @@ async function requestJson<T>(url: string, init?: RequestInit): Promise<T> {
     const message =
       body && typeof body === "object" && typeof (body as { error?: unknown }).error === "string"
         ? (body as { error: string }).error
-        : `Request failed: ${response.status}`;
+        : `请求失败：${response.status}`;
     throw new Error(message);
   }
 
@@ -215,8 +215,8 @@ export async function loginBoardCli(params: {
 
   const approvalUrl = challenge.approvalUrl ?? `${apiBase}${challenge.approvalPath}`;
   if (params.print !== false) {
-    console.error(pc.bold("Board authentication required"));
-    console.error(`Open this URL in your browser to approve CLI access:\n${approvalUrl}`);
+    console.error(pc.bold("需要 Board 认证"));
+    console.error(`请在浏览器中打开下面的 URL，批准 CLI 访问：\n${approvalUrl}`);
   }
 
   const opened = openUrl(approvalUrl);

@@ -270,7 +270,7 @@ export function boardAuthService(db: Db) {
       if (status === "cancelled") return { status, challenge };
 
       if (challenge.requestedAccess === "instance_admin_required" && !access.isInstanceAdmin) {
-        throw forbidden("Instance admin required");
+        throw forbidden("需要实例管理员权限");
       }
 
       let boardKeyId = challenge.boardApiKeyId;

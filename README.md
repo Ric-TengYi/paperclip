@@ -23,27 +23,27 @@
 
 <br/>
 
-## What is Paperclip?
+## Paperclip 是什么？
 
-# Open-source orchestration for zero-human companies
+# 面向零人工公司的开源 orchestration 层
 
-**If OpenClaw is an _employee_, Paperclip is the _company_**
+**如果 OpenClaw 是一名 _employee_，Paperclip 就是整家公司。**
 
-Paperclip is a Node.js server and React UI that orchestrates a team of AI agents to run a business. Bring your own agents, assign goals, and track your agents' work and costs from one dashboard.
+Paperclip 是一个 Node.js server 和 React UI，用来编排一组 AI agents 经营业务。你可以接入自己的 agents、分配目标，并在同一个 dashboard 里跟踪工作进度与成本。
 
-It looks like a task manager — but under the hood it has org charts, budgets, governance, goal alignment, and agent coordination.
+它表面上看像任务管理器，但底层包含 org chart、预算、governance、目标对齐和 Agent 协同机制。
 
-**Manage business goals, not pull requests.**
+**管理的是业务目标，而不是 pull request。**
 
-|        | Step            | Example                                                            |
-| ------ | --------------- | ------------------------------------------------------------------ |
-| **01** | Define the goal | _"Build the #1 AI note-taking app to $1M MRR."_                    |
-| **02** | Hire the team   | CEO, CTO, engineers, designers, marketers — any bot, any provider. |
-| **03** | Approve and run | Review strategy. Set budgets. Hit go. Monitor from the dashboard.  |
+|        | 步骤 | 示例 |
+| ------ | ---- | ---- |
+| **01** | 定义目标 | _“把 AI 笔记应用做到 $1M MRR。”_ |
+| **02** | 招聘团队 | CEO、CTO、工程师、设计师、营销人员，任意 bot，任意 provider。 |
+| **03** | 审批并运行 | 审查策略、设置预算、点击启动，并在 dashboard 中监控执行。 |
 
 <br/>
 
-> **COMING SOON: Clipmart** — Download and run entire companies with one click. Browse pre-built company templates — full org structures, agent configs, and skills — and import them into your Paperclip instance in seconds.
+> **即将推出：Clipmart** 只需一键即可下载并运行整家公司。浏览预构建的公司模板，包括完整组织结构、Agent 配置和 skills，并在几秒内导入到你的 Paperclip 实例。
 
 <br/>
 
@@ -60,21 +60,21 @@ It looks like a task manager — but under the hood it has org charts, budgets, 
   </tr>
 </table>
 
-<em>If it can receive a heartbeat, it's hired.</em>
+<em>只要能接收 heartbeat，就能被雇佣。</em>
 
 </div>
 
 <br/>
 
-## Paperclip is right for you if
+## 如果你符合以下情况，Paperclip 会很适合你
 
-- ✅ You want to build **autonomous AI companies**
-- ✅ You **coordinate many different agents** (OpenClaw, Codex, Claude, Cursor) toward a common goal
-- ✅ You have **20 simultaneous Claude Code terminals** open and lose track of what everyone is doing
-- ✅ You want agents running **autonomously 24/7**, but still want to audit work and chime in when needed
-- ✅ You want to **monitor costs** and enforce budgets
-- ✅ You want a process for managing agents that **feels like using a task manager**
-- ✅ You want to manage your autonomous businesses **from your phone**
+- ✅ 你想打造 **autonomous AI companies**
+- ✅ 你需要把多种 agents（OpenClaw、Codex、Claude、Cursor）朝同一个目标协同起来
+- ✅ 你经常同时打开 **20 个 Claude Code 终端**，很快就搞不清谁在做什么
+- ✅ 你希望 agents 能 **7x24 自主运行**，同时仍能在需要时审计和介入
+- ✅ 你想要 **监控成本** 并强制执行预算
+- ✅ 你希望管理 agents 的流程 **像任务管理器一样清晰**
+- ✅ 你希望能 **在手机上管理自己的 autonomous business**
 
 <br/>
 
@@ -171,7 +171,7 @@ Paperclip handles the hard orchestration details correctly.
 
 ## Quickstart
 
-Open source. Self-hosted. No Paperclip account required.
+开源，自托管，不需要 Paperclip 官方账号。
 
 ```bash
 npx paperclipai onboard --yes
@@ -186,9 +186,9 @@ pnpm install
 pnpm dev
 ```
 
-This starts the API server at `http://localhost:3100`. An embedded PostgreSQL database is created automatically — no setup required.
+这会在 `http://localhost:3100` 启动 API server，并自动创建 embedded PostgreSQL 数据库，无需额外初始化。
 
-> **Requirements:** Node.js 20+, pnpm 9.15+
+> **要求：** Node.js 20+，pnpm 9.15+
 
 <br/>
 

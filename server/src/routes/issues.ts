@@ -82,7 +82,7 @@ export function issueRoutes(db: Db, storage: StorageService) {
     }
     const actorAgent = await agentsSvc.getById(req.actor.agentId);
     if (!actorAgent || actorAgent.companyId !== companyId) {
-      res.status(403).json({ error: "Forbidden" });
+      res.status(403).json({ error: "禁止访问" });
       return false;
     }
     if (actorAgent.role === "ceo" || Boolean(actorAgent.permissions?.canCreateAgents)) return true;

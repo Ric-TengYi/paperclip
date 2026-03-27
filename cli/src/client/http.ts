@@ -186,15 +186,15 @@ async function toApiError(response: Response): Promise<ApiRequestError> {
 
   if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
     const body = parsed as Record<string, unknown>;
-    const message =
+      const message =
       (typeof body.error === "string" && body.error.trim()) ||
       (typeof body.message === "string" && body.message.trim()) ||
-      `Request failed with status ${response.status}`;
+      `请求失败，状态码 ${response.status}`;
 
     return new ApiRequestError(response.status, message, body.details, parsed);
   }
 
-  return new ApiRequestError(response.status, `Request failed with status ${response.status}`, undefined, parsed);
+  return new ApiRequestError(response.status, `请求失败，状态码 ${response.status}`, undefined, parsed);
 }
 
 function buildConnectionErrorMessage(input: {
@@ -205,21 +205,21 @@ function buildConnectionErrorMessage(input: {
 }): string {
   const healthUrl = buildHealthCheckUrl(input.url);
   const lines = [
-    "Could not reach the Paperclip API.",
+    "无法连接到 Paperclip API。",
     "",
-    `Request: ${input.method} ${input.url}`,
+    `请求：${input.method} ${input.url}`,
   ];
   if (input.causeMessage) {
-    lines.push(`Cause: ${input.causeMessage}`);
+    lines.push(`原因：${input.causeMessage}`);
   }
   lines.push(
     "",
-    "This usually means the Paperclip server is not running, the configured URL is wrong, or the request is being blocked before it reaches Paperclip.",
+    "这通常意味着 Paperclip server 尚未启动、配置的 URL 不正确，或者请求在到达 Paperclip 前就被拦截了。",
     "",
-    "Try:",
-    "- Start Paperclip with `pnpm dev` or `pnpm paperclipai run`.",
-    `- Verify the server is reachable with \`curl ${healthUrl}\`.`,
-    `- If Paperclip is running elsewhere, pass \`--api-base ${input.apiBase.replace(/\/+$/, "")}\` or set \`PAPERCLIP_API_URL\`.`,
+    "可以尝试：",
+    "- 使用 `pnpm dev` 或 `pnpm paperclipai run` 启动 Paperclip。",
+    `- 用 \`curl ${healthUrl}\` 验证服务是否可达。`,
+    `- 如果 Paperclip 运行在其他地址，请传入 \`--api-base ${input.apiBase.replace(/\/+$/, "")}\` 或设置 \`PAPERCLIP_API_URL\`。`,
   );
   return lines.join("\n");
 }

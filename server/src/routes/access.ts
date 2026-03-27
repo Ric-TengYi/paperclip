@@ -1570,7 +1570,7 @@ export function accessRoutes(
     if (req.actor.type !== "board") throw unauthorized();
     if (isLocalImplicit(req)) return;
     const allowed = await access.isInstanceAdmin(req.actor.userId);
-    if (!allowed) throw forbidden("Instance admin required");
+    if (!allowed) throw forbidden("需要实例管理员权限");
   }
 
   router.get("/board-claim/:token", async (req, res) => {

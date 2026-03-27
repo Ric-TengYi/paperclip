@@ -1403,7 +1403,7 @@ export function agentRoutes(db: Db) {
     if (req.actor.type === "agent") {
       const actorAgent = req.actor.agentId ? await svc.getById(req.actor.agentId) : null;
       if (!actorAgent || actorAgent.companyId !== existing.companyId) {
-        res.status(403).json({ error: "Forbidden" });
+        res.status(403).json({ error: "禁止访问" });
         return;
       }
       if (actorAgent.role !== "ceo") {

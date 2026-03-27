@@ -23,11 +23,11 @@ import { registerClientAuthCommands } from "./commands/client/auth.js";
 
 const program = new Command();
 const DATA_DIR_OPTION_HELP =
-  "Paperclip data directory root (isolates state from ~/.paperclip)";
+  "Paperclip 数据目录根路径（用于隔离 ~/.paperclip 中的状态）";
 
 program
   .name("paperclipai")
-  .description("Paperclip CLI — setup, diagnose, and configure your instance")
+  .description("Paperclip CLI：设置、诊断并配置你的实例")
   .version("0.2.7");
 
 program.hook("preAction", (_thisCommand, actionCommand) => {
@@ -42,38 +42,38 @@ program.hook("preAction", (_thisCommand, actionCommand) => {
 
 program
   .command("onboard")
-  .description("Interactive first-run setup wizard")
-  .option("-c, --config <path>", "Path to config file")
+  .description("交互式首次启动向导")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
-  .option("-y, --yes", "Accept defaults (quickstart + start immediately)", false)
-  .option("--run", "Start Paperclip immediately after saving config", false)
+  .option("-y, --yes", "接受默认值（quickstart 并立即启动）", false)
+  .option("--run", "保存配置后立即启动 Paperclip", false)
   .action(onboard);
 
 program
   .command("doctor")
-  .description("Run diagnostic checks on your Paperclip setup")
-  .option("-c, --config <path>", "Path to config file")
+  .description("对当前 Paperclip 配置执行诊断检查")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
-  .option("--repair", "Attempt to repair issues automatically")
+  .option("--repair", "尝试自动修复问题")
   .alias("--fix")
-  .option("-y, --yes", "Skip repair confirmation prompts")
+  .option("-y, --yes", "跳过修复确认提示")
   .action(async (opts) => {
     await doctor(opts);
   });
 
 program
   .command("env")
-  .description("Print environment variables for deployment")
-  .option("-c, --config <path>", "Path to config file")
+  .description("输出部署所需环境变量")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
   .action(envCommand);
 
 program
   .command("configure")
-  .description("Update configuration sections")
-  .option("-c, --config <path>", "Path to config file")
+  .description("更新配置分区")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
-  .option("-s, --section <section>", "Section to configure (llm, database, logging, server, storage, secrets)")
+  .option("-s, --section <section>", "要配置的分区（llm、database、logging、server、storage、secrets）")
   .action(configure);
 
 program
