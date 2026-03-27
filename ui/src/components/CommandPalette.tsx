@@ -106,14 +106,14 @@ export function CommandPalette() {
         if (v && isMobile) setSidebarOpen(false);
       }}>
       <CommandInput
-        placeholder="Search issues, agents, projects..."
+        placeholder="搜索 issues、agents、projects..."
         value={query}
         onValueChange={setQuery}
       />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>没有找到结果。</CommandEmpty>
 
-        <CommandGroup heading="Actions">
+        <CommandGroup heading="操作">
           <CommandItem
             onSelect={() => {
               setOpen(false);
@@ -121,7 +121,7 @@ export function CommandPalette() {
             }}
           >
             <SquarePen className="mr-2 h-4 w-4" />
-            Create new issue
+            创建新 Issue
             <span className="ml-auto text-xs text-muted-foreground">C</span>
           </CommandItem>
           <CommandItem

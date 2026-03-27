@@ -78,7 +78,7 @@ export function ApprovalCard({
             onClick={onApprove}
             disabled={isPending}
           >
-            Approve
+            批准
           </Button>
           <Button
             variant="destructive"
@@ -86,18 +86,18 @@ export function ApprovalCard({
             onClick={onReject}
             disabled={isPending}
           >
-            Reject
+            拒绝
           </Button>
         </div>
       )}
       <div className="mt-3">
         {detailLink ? (
           <Button variant="ghost" size="sm" className="text-xs px-0" asChild>
-            <Link to={detailLink}>View details</Link>
+            <Link to={detailLink}>查看详情</Link>
           </Button>
         ) : (
           <Button variant="ghost" size="sm" className="text-xs px-0" onClick={onOpen}>
-            View details
+            查看详情
           </Button>
         )}
       </div>
