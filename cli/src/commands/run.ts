@@ -51,16 +51,16 @@ export async function runCommand(opts: RunOptions): Promise<void> {
 
   if (!configExists(configPath)) {
     if (!process.stdin.isTTY || !process.stdout.isTTY) {
-      p.log.error("No config found and terminal is non-interactive.");
-      p.log.message(`Run ${pc.cyan("paperclipai onboard")} once, then retry ${pc.cyan("paperclipai run")}.`);
+      p.log.error("未找到配置文件，且当前终端不是交互模式。");
+      p.log.message(`请先运行一次 ${pc.cyan("paperclipai onboard")}，然后再重试 ${pc.cyan("paperclipai run")}。`);
       process.exit(1);
     }
 
-    p.log.step("No config found. Starting onboarding...");
+    p.log.step("未找到配置文件，正在启动 onboarding…");
     await onboard({ config: configPath, invokedByRun: true });
   }
 
-  p.log.step("Running doctor checks...");
+  p.log.step("正在运行 doctor 检查…");
   const summary = await doctor({
     config: configPath,
     repair: opts.repair ?? true,
@@ -68,21 +68,21 @@ export async function runCommand(opts: RunOptions): Promise<void> {
   });
 
   if (summary.failed > 0) {
-    p.log.error("Doctor found blocking issues. Not starting server.");
+    p.log.error("Doctor 发现阻塞性问题，服务不会启动。");
     process.exit(1);
   }
 
   const config = readConfig(configPath);
   if (!config) {
-    p.log.error(`No config found at ${configPath}.`);
+    p.log.error(`在 ${configPath} 未找到配置文件。`);
     process.exit(1);
   }
 
-  p.log.step("Starting Paperclip server...");
+  p.log.step("正在启动 Paperclip 服务…");
   const startedServer = await importServerEntry();
 
   if (shouldGenerateBootstrapInviteAfterStart(config)) {
-    p.log.step("Generating bootstrap CEO invite");
+    p.log.step("正在生成 bootstrap CEO 邀请");
     await bootstrapCeoInvite({
       config: configPath,
       dbUrl: startedServer.databaseUrl,
@@ -165,13 +165,13 @@ async function importServerEntry(): Promise<StartedServer> {
     const missingServerEntrypoint = !missingSpecifier || missingSpecifier === "@paperclipai/server";
     if (isModuleNotFoundError(err) && missingServerEntrypoint) {
       throw new Error(
-        `Could not locate a Paperclip server entrypoint.\n` +
+        `无法找到 Paperclip server 入口。\n` +
           `Tried: ${devEntry}, @paperclipai/server\n` +
           `${formatError(err)}`,
       );
     }
     throw new Error(
-      `Paperclip server failed to start.\n` +
+      `Paperclip server 启动失败。\n` +
         `${formatError(err)}`,
     );
   }
@@ -184,7 +184,7 @@ function shouldGenerateBootstrapInviteAfterStart(config: PaperclipConfig): boole
 async function startServerFromModule(mod: unknown, label: string): Promise<StartedServer> {
   const startServer = (mod as { startServer?: () => Promise<StartedServer> }).startServer;
   if (typeof startServer !== "function") {
-    throw new Error(`Paperclip server entrypoint did not export startServer(): ${label}`);
+    throw new Error(`Paperclip server 入口没有导出 startServer()：${label}`);
   }
   return await startServer();
 }

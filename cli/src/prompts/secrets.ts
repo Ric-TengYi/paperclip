@@ -26,40 +26,40 @@ export async function promptSecrets(current?: SecretsConfig): Promise<SecretsCon
     options: [
       {
         value: "local_encrypted" as const,
-        label: "Local encrypted (recommended)",
-        hint: "best for single-developer installs",
+        label: "本地加密（推荐）",
+        hint: "最适合单开发者安装",
       },
       {
         value: "aws_secrets_manager" as const,
         label: "AWS Secrets Manager",
-        hint: "requires external adapter integration",
+        hint: "需要额外的 adapter 集成",
       },
       {
         value: "gcp_secret_manager" as const,
         label: "GCP Secret Manager",
-        hint: "requires external adapter integration",
+        hint: "需要额外的 adapter 集成",
       },
       {
         value: "vault" as const,
         label: "HashiCorp Vault",
-        hint: "requires external adapter integration",
+        hint: "需要额外的 adapter 集成",
       },
     ],
     initialValue: base.provider,
   });
 
   if (p.isCancel(provider)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
   const strictMode = await p.confirm({
-    message: "Require secret refs for sensitive env vars?",
+    message: "敏感环境变量必须使用 secret 引用吗？",
     initialValue: base.strictMode,
   });
 
   if (p.isCancel(strictMode)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
@@ -67,16 +67,16 @@ export async function promptSecrets(current?: SecretsConfig): Promise<SecretsCon
   let keyFilePath = base.localEncrypted.keyFilePath || fallbackDefault;
   if (provider === "local_encrypted") {
     const keyPath = await p.text({
-      message: "Local encrypted key file path",
+      message: "本地加密 key 文件路径",
       defaultValue: keyFilePath,
       placeholder: fallbackDefault,
       validate: (value) => {
-        if (!value || value.trim().length === 0) return "Key file path is required";
+        if (!value || value.trim().length === 0) return "key 文件路径不能为空";
       },
     });
 
     if (p.isCancel(keyPath)) {
-      p.cancel("Setup cancelled.");
+      p.cancel("安装已取消。");
       process.exit(0);
     }
     keyFilePath = keyPath.trim();
@@ -84,8 +84,8 @@ export async function promptSecrets(current?: SecretsConfig): Promise<SecretsCon
 
   if (provider !== "local_encrypted") {
     p.note(
-      `${provider} is not fully wired in this build yet. Keep local_encrypted unless you are actively implementing that adapter.`,
-      "Heads up",
+      `${provider} 在当前构建里还没有完全接通。除非你正在主动实现对应 adapter，否则建议继续使用 local_encrypted。`,
+      "提示",
     );
   }
 

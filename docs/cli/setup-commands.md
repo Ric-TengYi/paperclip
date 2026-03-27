@@ -1,25 +1,25 @@
 ---
-title: Setup Commands
-summary: Onboard, run, doctor, and configure
+title: 初始化命令
+summary: onboard、run、doctor 与 configure
 ---
 
-Instance setup and diagnostics commands.
+实例初始化与诊断相关命令。
 
 ## `paperclipai run`
 
-One-command bootstrap and start:
+一条命令完成引导并启动：
 
 ```sh
 pnpm paperclipai run
 ```
 
-Does:
+它会：
 
-1. Auto-onboards if config is missing
-2. Runs `paperclipai doctor` with repair enabled
-3. Starts the server when checks pass
+1. 配置缺失时自动执行 onboard
+2. 运行带 repair 的 `paperclipai doctor`
+3. 检查通过后启动服务
 
-Choose a specific instance:
+指定某个 instance：
 
 ```sh
 pnpm paperclipai run --instance dev
@@ -27,24 +27,24 @@ pnpm paperclipai run --instance dev
 
 ## `paperclipai onboard`
 
-Interactive first-time setup:
+交互式首次初始化：
 
 ```sh
 pnpm paperclipai onboard
 ```
 
-First prompt:
+第一步会让你选择：
 
-1. `Quickstart` (recommended): local defaults (embedded database, no LLM provider, local disk storage, default secrets)
-2. `Advanced setup`: full interactive configuration
+1. `Quickstart`（推荐）：本地默认值（embedded 数据库、无 LLM provider、本地磁盘存储、默认 secrets）
+2. `Advanced setup`：完整交互式配置
 
-Start immediately after onboarding:
+完成 onboarding 后立即启动：
 
 ```sh
 pnpm paperclipai onboard --run
 ```
 
-Non-interactive defaults + immediate start (opens browser on server listen):
+非交互默认值并立即启动（服务监听后会自动打开浏览器）：
 
 ```sh
 pnpm paperclipai onboard --yes
@@ -52,24 +52,24 @@ pnpm paperclipai onboard --yes
 
 ## `paperclipai doctor`
 
-Health checks with optional auto-repair:
+健康检查，并可选自动修复：
 
 ```sh
 pnpm paperclipai doctor
 pnpm paperclipai doctor --repair
 ```
 
-Validates:
+会检查：
 
-- Server configuration
-- Database connectivity
-- Secrets adapter configuration
-- Storage configuration
-- Missing key files
+- 服务配置
+- 数据库连接性
+- Secrets adapter 配置
+- 存储配置
+- 缺失的 key 文件
 
 ## `paperclipai configure`
 
-Update configuration sections:
+更新指定配置分区：
 
 ```sh
 pnpm paperclipai configure --section server
@@ -79,7 +79,7 @@ pnpm paperclipai configure --section storage
 
 ## `paperclipai env`
 
-Show resolved environment configuration:
+显示解析后的环境变量配置：
 
 ```sh
 pnpm paperclipai env
@@ -87,15 +87,15 @@ pnpm paperclipai env
 
 ## `paperclipai allowed-hostname`
 
-Allow a private hostname for authenticated/private mode:
+为 authenticated/private 模式放行私有 hostname：
 
 ```sh
 pnpm paperclipai allowed-hostname my-tailscale-host
 ```
 
-## Local Storage Paths
+## 本地存储路径
 
-| Data | Default Path |
+| 数据 | 默认路径 |
 |------|-------------|
 | Config | `~/.paperclip/instances/default/config.json` |
 | Database | `~/.paperclip/instances/default/db` |
@@ -103,13 +103,13 @@ pnpm paperclipai allowed-hostname my-tailscale-host
 | Storage | `~/.paperclip/instances/default/data/storage` |
 | Secrets key | `~/.paperclip/instances/default/secrets/master.key` |
 
-Override with:
+也可以这样覆盖：
 
 ```sh
 PAPERCLIP_HOME=/custom/home PAPERCLIP_INSTANCE_ID=dev pnpm paperclipai run
 ```
 
-Or pass `--data-dir` directly on any command:
+或者在任意命令上直接传入 `--data-dir`：
 
 ```sh
 pnpm paperclipai run --data-dir ./tmp/paperclip-dev

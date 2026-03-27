@@ -44,15 +44,15 @@ export async function envCommand(opts: { config?: string }): Promise<void> {
   let configReadError: string | null = null;
 
   if (configExists(opts.config)) {
-    p.log.message(pc.dim(`Config file: ${configPath}`));
+    p.log.message(pc.dim(`配置文件：${configPath}`));
     try {
       config = readConfig(opts.config);
     } catch (err) {
       configReadError = err instanceof Error ? err.message : String(err);
-      p.log.message(pc.yellow(`Could not parse config: ${configReadError}`));
+      p.log.message(pc.yellow(`配置解析失败：${configReadError}`));
     }
   } else {
-    p.log.message(pc.dim(`Config file missing: ${configPath}`));
+    p.log.message(pc.dim(`配置文件不存在：${configPath}`));
   }
 
   const rows = collectDeploymentEnvRows(config, configPath);
@@ -81,32 +81,32 @@ export async function envCommand(opts: { config?: string }): Promise<void> {
     }
   };
 
-  formatSection("Required environment variables", requiredRows);
-  formatSection("Optional environment variables", optionalRows);
+  formatSection("必需环境变量", requiredRows);
+  formatSection("可选环境变量", optionalRows);
 
   const exportRows = rows.map((row) => (row.source === "missing" ? { ...row, value: "<set-this-value>" } : row));
   const uniqueRows = uniqueByKey(exportRows);
   const exportBlock = uniqueRows.map((row) => `export ${row.key}=${quoteShellValue(row.value)}`).join("\n");
 
   if (configReadError) {
-    p.log.error(`Could not load config cleanly: ${configReadError}`);
+    p.log.error(`无法完整加载配置：${configReadError}`);
   }
 
   p.note(
-    exportBlock || "No values detected. Set required variables manually.",
-    "Deployment export block",
+    exportBlock || "未检测到可用值，请手动设置必需环境变量。",
+    "部署导出块",
   );
 
   if (missingRequired.length > 0) {
     p.log.message(
       pc.yellow(
-        `Missing required values: ${missingRequired.map((row) => row.key).join(", ")}. Set these before deployment.`,
+        `缺少必需值：${missingRequired.map((row) => row.key).join(", ")}。部署前请先补齐。`,
       ),
     );
   } else {
-    p.log.message(pc.green("All required deployment variables are present."));
+    p.log.message(pc.green("所有必需部署变量都已就绪。"));
   }
-  p.outro("Done");
+  p.outro("完成");
 }
 
 function collectDeploymentEnvRows(config: PaperclipConfig | null, configPath: string): EnvVarRow[] {

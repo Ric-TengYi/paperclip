@@ -78,56 +78,56 @@ program
 
 program
   .command("db:backup")
-  .description("Create a one-off database backup using current config")
-  .option("-c, --config <path>", "Path to config file")
+  .description("基于当前配置创建一次性数据库备份")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
-  .option("--dir <path>", "Backup output directory (overrides config)")
-  .option("--retention-days <days>", "Retention window used for pruning", (value) => Number(value))
-  .option("--filename-prefix <prefix>", "Backup filename prefix", "paperclip")
-  .option("--json", "Print backup metadata as JSON")
+  .option("--dir <path>", "备份输出目录（覆盖配置值）")
+  .option("--retention-days <days>", "用于清理的保留天数", (value) => Number(value))
+  .option("--filename-prefix <prefix>", "备份文件名前缀", "paperclip")
+  .option("--json", "以 JSON 输出备份元数据")
   .action(async (opts) => {
     await dbBackupCommand(opts);
   });
 
 program
   .command("allowed-hostname")
-  .description("Allow a hostname for authenticated/private mode access")
-  .argument("<host>", "Hostname to allow (for example dotta-macbook-pro)")
-  .option("-c, --config <path>", "Path to config file")
+  .description("为 authenticated/private 模式放行一个 hostname")
+  .argument("<host>", "要放行的 hostname（例如 dotta-macbook-pro）")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
   .action(addAllowedHostname);
 
 program
   .command("run")
-  .description("Bootstrap local setup (onboard + doctor) and run Paperclip")
-  .option("-c, --config <path>", "Path to config file")
+  .description("完成本地引导（onboard + doctor）并启动 Paperclip")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
-  .option("-i, --instance <id>", "Local instance id (default: default)")
-  .option("--repair", "Attempt automatic repairs during doctor", true)
-  .option("--no-repair", "Disable automatic repairs during doctor")
+  .option("-i, --instance <id>", "本地 instance ID（默认：default）")
+  .option("--repair", "在 doctor 阶段尝试自动修复", true)
+  .option("--no-repair", "禁用 doctor 自动修复")
   .action(runCommand);
 
-const heartbeat = program.command("heartbeat").description("Heartbeat utilities");
+const heartbeat = program.command("heartbeat").description("Heartbeat 工具");
 
 heartbeat
   .command("run")
-  .description("Run one agent heartbeat and stream live logs")
-  .requiredOption("-a, --agent-id <agentId>", "Agent ID to invoke")
-  .option("-c, --config <path>", "Path to config file")
+  .description("运行一次 Agent heartbeat 并实时输出日志")
+  .requiredOption("-a, --agent-id <agentId>", "要调用的 Agent ID")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
-  .option("--context <path>", "Path to CLI context file")
-  .option("--profile <name>", "CLI context profile name")
-  .option("--api-base <url>", "Base URL for the Paperclip server API")
-  .option("--api-key <token>", "Bearer token for agent-authenticated calls")
+  .option("--context <path>", "CLI context 文件路径")
+  .option("--profile <name>", "CLI context profile 名称")
+  .option("--api-base <url>", "Paperclip server API 的基础 URL")
+  .option("--api-key <token>", "供 Agent 认证调用使用的 Bearer token")
   .option(
     "--source <source>",
-    "Invocation source (timer | assignment | on_demand | automation)",
+    "调用来源（timer | assignment | on_demand | automation）",
     "on_demand",
   )
-  .option("--trigger <trigger>", "Trigger detail (manual | ping | callback | system)", "manual")
-  .option("--timeout-ms <ms>", "Max time to wait before giving up", "0")
-  .option("--json", "Output raw JSON where applicable")
-  .option("--debug", "Show raw adapter stdout/stderr JSON chunks")
+  .option("--trigger <trigger>", "触发细节（manual | ping | callback | system）", "manual")
+  .option("--timeout-ms <ms>", "放弃前的最长等待时间", "0")
+  .option("--json", "在适用时输出原始 JSON")
+  .option("--debug", "显示原始 adapter stdout/stderr JSON 分片")
   .action(heartbeatRun);
 
 registerContextCommands(program);
@@ -140,16 +140,16 @@ registerDashboardCommands(program);
 registerWorktreeCommands(program);
 registerPluginCommands(program);
 
-const auth = program.command("auth").description("Authentication and bootstrap utilities");
+const auth = program.command("auth").description("认证与 bootstrap 工具");
 
 auth
   .command("bootstrap-ceo")
-  .description("Create a one-time bootstrap invite URL for first instance admin")
-  .option("-c, --config <path>", "Path to config file")
+  .description("为首个实例管理员创建一次性 bootstrap 邀请 URL")
+  .option("-c, --config <path>", "配置文件路径")
   .option("-d, --data-dir <path>", DATA_DIR_OPTION_HELP)
-  .option("--force", "Create new invite even if admin already exists", false)
-  .option("--expires-hours <hours>", "Invite expiration window in hours", (value) => Number(value))
-  .option("--base-url <url>", "Public base URL used to print invite link")
+  .option("--force", "即使管理员已存在也创建新邀请", false)
+  .option("--expires-hours <hours>", "邀请过期时长（小时）", (value) => Number(value))
+  .option("--base-url <url>", "用于输出邀请链接的公开 base URL")
   .action(bootstrapCeoInvite);
 
 registerClientAuthCommands(auth);

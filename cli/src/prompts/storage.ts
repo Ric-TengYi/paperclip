@@ -26,39 +26,39 @@ export async function promptStorage(current?: StorageConfig): Promise<StorageCon
   const base = current ?? defaultStorageConfig();
 
   const provider = await p.select({
-    message: "Storage provider",
+    message: "存储 provider",
     options: [
       {
         value: "local_disk" as const,
-        label: "Local disk (recommended)",
-        hint: "best for single-user local deployments",
+        label: "本地磁盘（推荐）",
+        hint: "最适合单人本地部署",
       },
       {
         value: "s3" as const,
-        label: "S3 compatible",
-        hint: "for cloud/object storage backends",
+        label: "S3 兼容存储",
+        hint: "适用于云对象存储后端",
       },
     ],
     initialValue: base.provider,
   });
 
   if (p.isCancel(provider)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
   if (provider === "local_disk") {
     const baseDir = await p.text({
-      message: "Local storage base directory",
+      message: "本地存储根目录",
       defaultValue: base.localDisk.baseDir || defaultStorageBaseDir(),
       placeholder: defaultStorageBaseDir(),
       validate: (value) => {
-        if (!value || value.trim().length === 0) return "Storage base directory is required";
+        if (!value || value.trim().length === 0) return "存储根目录不能为空";
       },
     });
 
     if (p.isCancel(baseDir)) {
-      p.cancel("Setup cancelled.");
+      p.cancel("安装已取消。");
       process.exit(0);
     }
 
@@ -76,12 +76,12 @@ export async function promptStorage(current?: StorageConfig): Promise<StorageCon
     defaultValue: base.s3.bucket || "paperclip",
     placeholder: "paperclip",
     validate: (value) => {
-      if (!value || value.trim().length === 0) return "Bucket is required";
+      if (!value || value.trim().length === 0) return "bucket 不能为空";
     },
   });
 
   if (p.isCancel(bucket)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
@@ -90,44 +90,44 @@ export async function promptStorage(current?: StorageConfig): Promise<StorageCon
     defaultValue: base.s3.region || "us-east-1",
     placeholder: "us-east-1",
     validate: (value) => {
-      if (!value || value.trim().length === 0) return "Region is required";
+      if (!value || value.trim().length === 0) return "region 不能为空";
     },
   });
 
   if (p.isCancel(region)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
   const endpoint = await p.text({
-    message: "S3 endpoint (optional for compatible backends)",
+    message: "S3 endpoint（兼容后端可选）",
     defaultValue: base.s3.endpoint ?? "",
     placeholder: "https://s3.amazonaws.com",
   });
 
   if (p.isCancel(endpoint)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
   const prefix = await p.text({
-    message: "Object key prefix (optional)",
+    message: "对象 key 前缀（可选）",
     defaultValue: base.s3.prefix ?? "",
     placeholder: "paperclip/",
   });
 
   if (p.isCancel(prefix)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
   const forcePathStyle = await p.confirm({
-    message: "Use S3 path-style URLs?",
+    message: "使用 S3 path-style URL 吗？",
     initialValue: base.s3.forcePathStyle ?? false,
   });
 
   if (p.isCancel(forcePathStyle)) {
-    p.cancel("Setup cancelled.");
+    p.cancel("安装已取消。");
     process.exit(0);
   }
 
@@ -143,4 +143,3 @@ export async function promptStorage(current?: StorageConfig): Promise<StorageCon
     },
   };
 }
-

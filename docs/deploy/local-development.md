@@ -1,68 +1,68 @@
 ---
-title: Local Development
-summary: Set up Paperclip for local development
+title: 本地开发
+summary: 为本地开发准备 Paperclip
 ---
 
-Run Paperclip locally with zero external dependencies.
+在几乎零外部依赖的情况下本地运行 Paperclip。
 
-## Prerequisites
+## 前置要求
 
 - Node.js 20+
 - pnpm 9+
 
-## Start Dev Server
+## 启动开发服务
 
 ```sh
 pnpm install
 pnpm dev
 ```
 
-This starts:
+这会启动：
 
-- **API server** at `http://localhost:3100`
-- **UI** served by the API server in dev middleware mode (same origin)
+- `http://localhost:3100` 上的 **API server**
+- 由 API server 通过 dev middleware 提供的 **UI**（同源）
 
-No Docker or external database required. Paperclip uses embedded PostgreSQL automatically.
+不需要 Docker，也不需要外部数据库。Paperclip 会自动使用 embedded PostgreSQL。
 
-## One-Command Bootstrap
+## 一键启动
 
-For a first-time install:
+首次安装时可直接执行：
 
 ```sh
 pnpm paperclipai run
 ```
 
-This does:
+它会完成以下动作：
 
-1. Auto-onboards if config is missing
-2. Runs `paperclipai doctor` with repair enabled
-3. Starts the server when checks pass
+1. 如果缺少配置则自动执行 onboard
+2. 运行带 repair 的 `paperclipai doctor`
+3. 检查通过后启动服务
 
-## Tailscale/Private Auth Dev Mode
+## Tailscale / 私有认证开发模式
 
-To run in `authenticated/private` mode for network access:
+如果你想以 `authenticated/private` 模式运行并允许网络访问：
 
 ```sh
 pnpm dev --tailscale-auth
 ```
 
-This binds the server to `0.0.0.0` for private-network access.
+这会把服务绑定到 `0.0.0.0`，从而允许私有网络访问。
 
-Alias:
+等价别名：
 
 ```sh
 pnpm dev --authenticated-private
 ```
 
-Allow additional private hostnames:
+放行额外的私有 hostname：
 
 ```sh
 pnpm paperclipai allowed-hostname dotta-macbook-pro
 ```
 
-For full setup and troubleshooting, see [Tailscale Private Access](/deploy/tailscale-private-access).
+完整配置和排障说明见 [Tailscale Private Access](/deploy/tailscale-private-access)。
 
-## Health Checks
+## 健康检查
 
 ```sh
 curl http://localhost:3100/api/health
@@ -72,16 +72,16 @@ curl http://localhost:3100/api/companies
 # -> []
 ```
 
-## Reset Dev Data
+## 重置开发数据
 
-To wipe local data and start fresh:
+如果你想清空本地数据并重新开始：
 
 ```sh
 rm -rf ~/.paperclip/instances/default/db
 pnpm dev
 ```
 
-## Data Locations
+## 数据位置
 
 | Data | Path |
 |------|------|
@@ -91,7 +91,7 @@ pnpm dev
 | Secrets key | `~/.paperclip/instances/default/secrets/master.key` |
 | Logs | `~/.paperclip/instances/default/logs` |
 
-Override with environment variables:
+也可以通过环境变量覆盖：
 
 ```sh
 PAPERCLIP_HOME=/custom/path PAPERCLIP_INSTANCE_ID=dev pnpm paperclipai run

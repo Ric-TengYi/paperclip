@@ -1,9 +1,9 @@
 ---
-title: CLI Overview
-summary: CLI installation and setup
+title: CLI 概览
+summary: CLI 安装与初始化
 ---
 
-The Paperclip CLI handles instance setup, diagnostics, and control-plane operations.
+Paperclip CLI 负责实例初始化、诊断检查以及 control-plane 操作。
 
 ## Usage
 
@@ -11,22 +11,22 @@ The Paperclip CLI handles instance setup, diagnostics, and control-plane operati
 pnpm paperclipai --help
 ```
 
-## Global Options
+## 全局选项
 
-All commands support:
+所有命令都支持：
 
 | Flag | Description |
 |------|-------------|
-| `--data-dir <path>` | Local Paperclip data root (isolates from `~/.paperclip`) |
+| `--data-dir <path>` | 本地 Paperclip 数据根目录（与 `~/.paperclip` 隔离） |
 | `--api-base <url>` | API base URL |
-| `--api-key <token>` | API authentication token |
-| `--context <path>` | Context file path |
-| `--profile <name>` | Context profile name |
-| `--json` | Output as JSON |
+| `--api-key <token>` | API 认证 token |
+| `--context <path>` | Context 文件路径 |
+| `--profile <name>` | Context profile 名称 |
+| `--json` | 以 JSON 输出 |
 
-Company-scoped commands also accept `--company-id <id>`.
+公司作用域命令也接受 `--company-id <id>`。
 
-For clean local instances, pass `--data-dir` on the command you run:
+如果你想得到一个隔离干净的本地实例，可以在命令上直接传入 `--data-dir`：
 
 ```sh
 pnpm paperclipai run --data-dir ./tmp/paperclip-dev
@@ -34,34 +34,34 @@ pnpm paperclipai run --data-dir ./tmp/paperclip-dev
 
 ## Context Profiles
 
-Store defaults to avoid repeating flags:
+把默认值存进 context，可以避免重复输入参数：
 
 ```sh
-# Set defaults
+# 设置默认值
 pnpm paperclipai context set --api-base http://localhost:3100 --company-id <id>
 
-# View current context
+# 查看当前 context
 pnpm paperclipai context show
 
-# List profiles
+# 列出 profiles
 pnpm paperclipai context list
 
-# Switch profile
+# 切换 profile
 pnpm paperclipai context use default
 ```
 
-To avoid storing secrets in context, use an env var:
+如果不想把 secrets 存进 context，可以改用环境变量：
 
 ```sh
 pnpm paperclipai context set --api-key-env-var-name PAPERCLIP_API_KEY
 export PAPERCLIP_API_KEY=...
 ```
 
-Context is stored at `~/.paperclip/context.json`.
+Context 默认保存在 `~/.paperclip/context.json`。
 
-## Command Categories
+## 命令分类
 
-The CLI has two categories:
+CLI 主要分成两类：
 
-1. **[Setup commands](/cli/setup-commands)** — instance bootstrap, diagnostics, configuration
-2. **[Control-plane commands](/cli/control-plane-commands)** — issues, agents, approvals, activity
+1. **[初始化命令](/cli/setup-commands)**：实例引导、诊断、配置
+2. **[Control-plane 命令](/cli/control-plane-commands)**：issues、agents、approvals、activity

@@ -1,11 +1,11 @@
 ---
 title: Docker
-summary: Docker Compose quickstart
+summary: Docker Compose 快速开始
 ---
 
-Run Paperclip in Docker without installing Node or pnpm locally.
+无需在本机安装 Node 或 pnpm，也可以通过 Docker 运行 Paperclip。
 
-## Compose Quickstart (Recommended)
+## Compose 快速开始（推荐）
 
 ```sh
 docker compose -f docker-compose.quickstart.yml up --build
@@ -13,19 +13,19 @@ docker compose -f docker-compose.quickstart.yml up --build
 
 Open [http://localhost:3100](http://localhost:3100).
 
-Defaults:
+默认配置：
 
-- Host port: `3100`
-- Data directory: `./data/docker-paperclip`
+- 主机端口：`3100`
+- 数据目录：`./data/docker-paperclip`
 
-Override with environment variables:
+可以通过环境变量覆盖：
 
 ```sh
 PAPERCLIP_PORT=3200 PAPERCLIP_DATA_DIR=./data/pc \
   docker compose -f docker-compose.quickstart.yml up --build
 ```
 
-## Manual Docker Build
+## 手动构建 Docker 镜像
 
 ```sh
 docker build -t paperclip-local .
@@ -37,23 +37,23 @@ docker run --name paperclip \
   paperclip-local
 ```
 
-## Data Persistence
+## 数据持久化
 
-All data is persisted under the bind mount (`./data/docker-paperclip`):
+所有数据都会持久化到 bind mount 目录（`./data/docker-paperclip`）下：
 
-- Embedded PostgreSQL data
-- Uploaded assets
-- Local secrets key
-- Agent workspace data
+- Embedded PostgreSQL 数据
+- 上传的资源文件
+- 本地 secrets key
+- Agent workspace 数据
 
-## Claude and Codex Adapters in Docker
+## Docker 中的 Claude 与 Codex Adapters
 
-The Docker image pre-installs:
+Docker 镜像已预装：
 
 - `claude` (Anthropic Claude Code CLI)
 - `codex` (OpenAI Codex CLI)
 
-Pass API keys to enable local adapter runs inside the container:
+传入 API key 后，就可以在容器内启用本地 adapter 运行：
 
 ```sh
 docker run --name paperclip \
@@ -66,4 +66,4 @@ docker run --name paperclip \
   paperclip-local
 ```
 
-Without API keys, the app runs normally — adapter environment checks will surface missing prerequisites.
+如果没有 API key，应用依然可以正常运行，只是在 adapter 环境检查时会提示缺少前置条件。

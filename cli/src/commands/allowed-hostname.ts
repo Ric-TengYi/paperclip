@@ -8,7 +8,7 @@ export async function addAllowedHostname(host: string, opts: { config?: string }
   const config = readConfig(opts.config);
 
   if (!config) {
-    p.log.error(`No config found at ${configPath}. Run ${pc.cyan("paperclip onboard")} first.`);
+    p.log.error(`在 ${configPath} 未找到配置。请先运行 ${pc.cyan("paperclipai onboard")}。`);
     return;
   }
 
@@ -23,18 +23,17 @@ export async function addAllowedHostname(host: string, opts: { config?: string }
   writeConfig(config, opts.config);
 
   if (existed) {
-    p.log.info(`Hostname ${pc.cyan(normalized)} is already allowed.`);
+    p.log.info(`Hostname ${pc.cyan(normalized)} 已经在允许列表中。`);
   } else {
-    p.log.success(`Added allowed hostname: ${pc.cyan(normalized)}`);
+    p.log.success(`已添加允许的 hostname：${pc.cyan(normalized)}`);
     p.log.message(
-      pc.dim("Restart the Paperclip server for this change to take effect."),
+      pc.dim("重启 Paperclip 服务后，这项更改才会生效。"),
     );
   }
 
   if (!(config.server.deploymentMode === "authenticated" && config.server.exposure === "private")) {
     p.log.message(
-      pc.dim("Note: allowed hostnames are enforced only in authenticated/private mode."),
+      pc.dim("注意：allowed hostnames 只会在 authenticated/private 模式下生效。"),
     );
   }
 }
-
